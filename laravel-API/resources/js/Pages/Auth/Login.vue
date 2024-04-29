@@ -7,6 +7,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import axios from 'axios';
 
 defineProps({
     canResetPassword: Boolean,
@@ -19,13 +20,19 @@ const form = useForm({
     remember: false,
 });
 
+
+
 const submit = () => {
-    form.transform(data => ({
-        ...data,
-        remember: form.remember ? 'on' : '',
-    })).post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
+    axios.post('/api/v1/login', form)
+        .then(response => {
+            // Handle successful login
+            form.reset();
+            window.location.href = '/dashboard';
+        })
+        .catch(error => {
+            // Handle error
+            form.errors = error.response.data.errors;
+        });
 };
 </script>
 

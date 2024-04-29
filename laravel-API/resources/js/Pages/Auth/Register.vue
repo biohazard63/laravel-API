@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import Checkbox from '@/Components/Checkbox.vue';
@@ -17,9 +18,16 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
+    axios.post('/api/v1/register', form)
+        .then(response => {
+            // Handle successful registration
+            form.reset();
+            window.location.href = '/'; // Redirect to home page
+        })
+        .catch(error => {
+            // Handle error
+            form.errors = error.response.data.errors;
+        });
 };
 </script>
 
