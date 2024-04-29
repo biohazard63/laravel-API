@@ -27,7 +27,7 @@ const submit = () => {
         .then(response => {
             // Handle successful login
             form.reset();
-            window.location.href = '/dashboard';
+            window.location.href = '/';
         })
         .catch(error => {
             // Handle error
