@@ -22,7 +22,7 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
-//            'category_id' => 'required|exists:categories,id',
+            'image' => 'required|url', // Valide que l'image est une URL
         ]);
 
         $product = new Product([
@@ -30,11 +30,11 @@ class ProductController extends Controller
             'description' => $request->get('description'),
             'price' => $request->get('price'),
             'stock' => $request->get('stock'),
+            'image' => $request->get('image'), // Stocke l'URL de l'image
         ]);
 
         $product->save();
 
-//        $category = Category::find($request->get('category_id'));
         $category = Category::find(1);
         $product->categories()->attach($category);
         return response()->json($product, 201);
@@ -47,7 +47,7 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
-            'category_id' => 'required|exists:categories,id',
+            'image' => 'url', // Valide que l'image est une URL
         ]);
 
         $product->update([
@@ -55,14 +55,10 @@ class ProductController extends Controller
             'description' => $request->get('description'),
             'price' => $request->get('price'),
             'stock' => $request->get('stock'),
+            'image' => $request->get('image'), // Met à jour l'URL de l'image
         ]);
 
-        // Update the category of the product
-        $product->categories()->sync([$request->get('category_id')]); // If a product can belong to multiple categories
-
-        // If a product can belong to only one category, use the following line instead of the above line
-        // $category = Category::find($request->get('category_id'));
-        // $product->category()->associate($category);
+        $product->categories()->sync([$request->get('category_id')]);
 
         return response()->json($product, 200);
     }
