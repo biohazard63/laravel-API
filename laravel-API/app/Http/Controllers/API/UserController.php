@@ -14,7 +14,7 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function store(Request $request)
+   public function store(Request $request)
 {
     $request->validate([
         'name' => 'required|max:255',
@@ -28,7 +28,7 @@ class UserController extends Controller
         'password' => bcrypt($request->password),
     ]);
 
-    return response()->json($user, 201);
+    return response()->json(['user' => $user], 201);
 }
 
     public function show(User $user)
@@ -38,7 +38,19 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        // Validate and update user
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'sometimes|min:6',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->has('password') ? bcrypt($request->password) : $user->password,
+        ]);
+
+        return response()->json(['user' => $user]);
     }
 
     public function destroy(User $user)
@@ -69,6 +81,18 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        // Handle registration
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return response()->json(['user' => $user], 201);
     }
 }
