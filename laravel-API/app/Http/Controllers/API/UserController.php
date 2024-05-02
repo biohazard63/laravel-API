@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -14,22 +15,22 @@ class UserController extends Controller
         return User::all();
     }
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|max:255',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|min:6',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+        ]);
 
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-    ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
 
-    return response()->json(['user' => $user], 201);
-}
+        return response()->json(['user' => $user], 201);
+    }
 
     public function show(User $user)
     {
@@ -60,39 +61,46 @@ class UserController extends Controller
         return response()->json(null, 204);
     }
 
-  public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-    if (!Auth::attempt($credentials)) {
-        return response()->json(['message' => 'Invalid email or password'], 401);
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['message' => 'Invalid email or password'], 401);
+        }
+
+        // Suppression des anciens tokens
+        if (auth('sanctum')->check()) {
+            auth()->user()->tokens()->delete();
+        }
+
+        // Création d'un nouveau token
+        $token = Auth::user()->createToken('app_token', ['*'])->plainTextToken;
+
+        return response()->json(['user' => Auth::user(), 'token' => $token]);
     }
-
-    $user = Auth::user();
-    $token = $user->createToken('API Token')->plainTextToken;
-
-    return response()->json(['user' => $user, 'token' => $token]);
-}
 
     public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8|confirmed',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
         ]);
 
-        return response()->json(['user' => $user], 201);
+        $token = $user->createToken('app_token', ['*'])->plainTextToken;
+
+        return response()->json(['token' => $token], 201);
     }
 }
