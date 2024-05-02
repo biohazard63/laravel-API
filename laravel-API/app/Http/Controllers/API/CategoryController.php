@@ -9,7 +9,15 @@ use App\Models\Category;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/categories",
+     *     tags={"Categories"},
+     *     summary="Get list of categories",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *     )
+     * )
      */
     public function index()
     {
@@ -18,27 +26,55 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/categories",
+     *     tags={"Categories"},
+     *     summary="Create a new category",
+     *     @OA\RequestBody(
+     *         description="Category data",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Successful operation",
+     *     )
+     * )
      */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255',
-            // Add validation for other fields if necessary
         ]);
 
         $category = new Category([
             'name' => $request->get('name'),
-            // Add other fields if necessary
         ]);
 
         $category->save();
 
-        return (new \Illuminate\Http\Response)->setContent($category)->setStatusCode(201);
+        return response()->json($category, 201);
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/categories/{category}",
+     *     tags={"Categories"},
+     *     summary="Get a category",
+     *     @OA\Parameter(
+     *         name="category",
+     *         in="path",
+     *         description="ID of the category",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *     )
+     * )
      */
     public function show(Category $category)
     {
@@ -46,25 +82,62 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/categories/{category}",
+     *     tags={"Categories"},
+     *     summary="Update a category",
+     *     @OA\Parameter(
+     *         name="category",
+     *         in="path",
+     *         description="ID of the category",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Category data",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *     )
+     * )
      */
     public function update(Request $request, Category $category)
     {
         $request->validate([
             'name' => 'required|max:255',
-            // Add validation for other fields if necessary
         ]);
 
         $category->update([
             'name' => $request->get('name'),
-            // Add other fields if necessary
         ]);
 
         return response()->json($category, 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/categories/{category}",
+     *     tags={"Categories"},
+     *     summary="Delete a category",
+     *     @OA\Parameter(
+     *         name="category",
+     *         in="path",
+     *         description="ID of the category",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Successful operation",
+     *     )
+     * )
      */
     public function destroy(Category $category)
     {
