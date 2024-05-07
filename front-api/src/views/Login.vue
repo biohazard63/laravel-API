@@ -2,9 +2,10 @@
   <div class="register flex flex-col justify-center items-center h-screen w-full">
     <h2 class="mb-4 text-2xl">Login</h2>
     <form @submit.prevent="login" class="w-full max-w-xs">
-      <input v-model="email" type="text" placeholder="Email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3"> <!-- Changez ceci -->
+      <input v-model="email" type="text" placeholder="Email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3">
       <input v-model="password" type="password" placeholder="Password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3">
       <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+      <router-link to="/register" class="text-blue-500 hover:text-blue-800">Créer un compte</router-link>
     </form>
   </div>
 </template>

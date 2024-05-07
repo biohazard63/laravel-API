@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import './assets/index.css'
 
 import { createApp } from 'vue'

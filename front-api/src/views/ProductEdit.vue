@@ -1,24 +1,38 @@
 <template>
-  <form @submit.prevent="updateProduct">
-    <label for="name">Nom du produit</label>
-    <input id="name" v-model="product.name" type="text" required>
+  <form @submit.prevent="updateProduct" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nom du produit</label>
+      <input id="name" v-model="product.name" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
 
-    <label for="description">Description du produit</label>
-    <input id="description" v-model="product.description" type="text" required>
+    <div class="mb-4">
+      <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description du produit</label>
+      <input id="description" v-model="product.description" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
 
-    <label for="price">Prix du produit</label>
-    <input id="price" v-model="product.price" type="number" required>
+    <div class="mb-4">
+      <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Prix du produit</label>
+      <input id="price" v-model="product.price" type="number" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
 
-    <label for="stock">Stock du produit</label>
-    <input id="stock" v-model="product.stock" type="number" required>
+    <div class="mb-4">
+      <label for="stock" class="block text-gray-700 text-sm font-bold mb-2">Stock du produit</label>
+      <input id="stock" v-model="product.stock" type="number" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
 
-  <label for="image">Image du produit</label>
-  <input id="image" v-model="product.image" type="text" required>
+    <div class="mb-4">
+      <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image du produit</label>
+      <input id="image" v-model="product.image" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
 
-  <label for="category">Catégorie du produit</label>
-  <input id="category" v-model="product.category_id" type="number" required>
+    <div class="mb-4">
+      <label for="category" class="block text-gray-700 text-sm font-bold mb-2">Catégorie du produit</label>
+      <input id="category" v-model="product.category_id" type="number" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
 
-    <button type="submit">Mettre à jour le produit</button>
+    <div class="flex items-center justify-between">
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Mettre à jour le produit</button>
+    </div>
   </form>
 </template>
 
@@ -56,41 +70,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-form {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  margin-top: 22rem;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 5px;
-}
-
-form label {
-  margin-bottom: 5px;
-  color: #333333;
-}
-
-form input {
-  padding: 10px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  color: #333333;
-}
-
-form button {
-  background-color: #007BFF;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-form button:hover {
-  background-color: #0056b3;
-}
-</style>

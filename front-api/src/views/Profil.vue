@@ -1,14 +1,15 @@
 <template>
-  <div>
-    <h1>Profil de l'utilisateur</h1>
-
-    <div v-if="user">
-      <p><strong>Nom:</strong> {{ user.name }}</p>
-      <p><strong>Email:</strong> {{ user.email }}</p>
-      <!-- Ajoutez ici d'autres informations de profil que vous souhaitez afficher -->
-    </div>
-    <div v-else>
-      <p>Chargement...</p>
+  <div class="flex justify-center items-center h-screen">
+    <div class="w-3/4">
+      <h1 class="text-2xl font-bold mb-5 text-center">Profil de l'utilisateur</h1>
+      <div v-if="user" class="mb-5 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <p class="mb-2"><strong class="text-gray-700 text-sm font-bold">Nom:</strong> {{ user.name }}</p>
+        <p class="mb-2"><strong class="text-gray-700 text-sm font-bold">Email:</strong> {{ user.email }}</p>
+        <!-- Ajoutez ici d'autres informations de profil que vous souhaitez afficher -->
+      </div>
+      <div v-else>
+        <p class="text-gray-700 text-sm font-bold">Chargement...</p>
+      </div>
     </div>
   </div>
 </template>
@@ -40,12 +41,4 @@ export default {
     },
   },
 };
-</script><style scoped>
-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 80%;
-}
-</style>
+</script>
