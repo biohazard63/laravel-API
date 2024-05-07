@@ -15,7 +15,12 @@
             <td class="py-4 px-6 border-b">{{ user.name }}</td>
             <td class="py-4 px-6 border-b">{{ user.email }}</td>
             <td class="py-4 px-6 border-b">
-              <button @click="deleteUser(user.id)" class="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Supprimer</button>
+              <button
+                @click="deleteUser(user.id)"
+                class="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded"
+              >
+                Supprimer
+              </button>
             </td>
           </tr>
         </tbody>
@@ -25,35 +30,34 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   data() {
     return {
-      users: [],
-    };
+      users: []
+    }
   },
   async created() {
-    await this.loadUsers();
+    await this.loadUsers()
   },
   methods: {
     async loadUsers() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/v1/users');
-        this.users = response.data;
+        const response = await axios.get('http://127.0.0.1:8000/api/v1/users')
+        this.users = response.data
       } catch (error) {
-        console.error('An error occurred:', error);
+        console.error('An error occurred:', error)
       }
     },
     async deleteUser(userId) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/v1/users/${userId}`);
-        await this.loadUsers(); // Recharge les utilisateurs après la suppression
+        await axios.delete(`http://127.0.0.1:8000/api/v1/users/${userId}`)
+        await this.loadUsers()
       } catch (error) {
-        console.error('An error occurred:', error);
+        console.error('An error occurred:', error)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
-

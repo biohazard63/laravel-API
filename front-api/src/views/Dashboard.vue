@@ -2,11 +2,17 @@
   <div class="container mx-auto px-4">
     <h2 class="mb-4 text-2xl font-bold text-center">Dashboard</h2>
     <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
-      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+      <table
+        class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative"
+      >
         <thead>
           <tr class="text-left">
-            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">Nom</th>
-            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">Email</th>
+            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">
+              Nom
+            </th>
+            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">
+              Email
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -19,11 +25,17 @@
     </div>
     <h2 class="mt-8 mb-4 text-2xl font-bold text-center">Produits</h2>
     <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
-      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+      <table
+        class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative"
+      >
         <thead>
           <tr class="text-left">
-            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">Nom du produit</th>
-            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">Prix</th>
+            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">
+              Nom du produit
+            </th>
+            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">
+              Prix
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -36,10 +48,14 @@
     </div>
     <h2 class="mt-8 mb-4 text-2xl font-bold text-center">Catégories</h2>
     <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
-      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+      <table
+        class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative"
+      >
         <thead>
           <tr class="text-left">
-            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">Nom de la catégorie</th>
+            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">
+              Nom de la catégorie
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -53,7 +69,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'Dashboard',
@@ -61,37 +77,37 @@ export default {
     return {
       users: [],
       products: [],
-      categories: [], // Ajoutez ceci
-    };
+      categories: []
+    }
   },
   async mounted() {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/v1/users', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
-      });
-      this.users = response.data;
+      })
+      this.users = response.data
 
       const productResponse = await axios.get('http://127.0.0.1:8000/api/v1/products', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
-      });
-      const allProducts = productResponse.data;
-      this.products = allProducts.slice(Math.max(allProducts.length - 5, 0));
+      })
+      const allProducts = productResponse.data
+      this.products = allProducts.slice(Math.max(allProducts.length - 5, 0))
 
       // Ajoutez ceci
       const categoryResponse = await axios.get('http://127.0.0.1:8000/api/v1/categories', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
-      });
-      const allCategories = categoryResponse.data;
-      this.categories = allCategories.slice(Math.max(allCategories.length - 5, 0)); // Prenez les 5 dernières catégories
+      })
+      const allCategories = categoryResponse.data
+      this.categories = allCategories.slice(Math.max(allCategories.length - 5, 0))
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error('An error occurred:', error)
     }
-  },
-};
+  }
+}
 </script>

@@ -11,7 +11,7 @@ class ProductFactory extends Factory
 
 public function definition()
 {
-    $images = ['Skateboard-PNG.png', 'téléchargement.jpg']; // Remplacez par les noms de vos images
+    $images = ['Skateboard-PNG.png', 'téléchargement.jpg'];
     $image = $images[array_rand($images)];
 
     return [
@@ -19,7 +19,7 @@ public function definition()
         'description' => $this->faker->sentence,
         'price' => $this->faker->randomFloat(2, 1, 100),
         'stock' => $this->faker->numberBetween(1, 100),
-        'image' => "product_images/{$image}", // Incluez le sous-dossier dans le chemin de l'image
+        'image' => "product_images/{$image}",
     ];
 }
 }

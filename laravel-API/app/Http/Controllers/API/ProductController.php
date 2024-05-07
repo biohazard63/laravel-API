@@ -65,10 +65,10 @@ class ProductController extends Controller
         'description' => 'required',
         'price' => 'required|numeric',
         'stock' => 'required|numeric',
-        'image' => 'required|image', // Valide que l'image est un fichier image
+        'image' => 'required|image',
     ]);
 
-    // Stocke l'image et récupère le chemin
+
     $imagePath = $request->file('image')->store('product_images', 'public');
 
     $product = new Product([
@@ -76,7 +76,7 @@ class ProductController extends Controller
         'description' => $request->get('description'),
         'price' => $request->get('price'),
         'stock' => $request->get('stock'),
-        'image' => $imagePath, // Stocke le chemin de l'image
+        'image' => $imagePath,
     ]);
 
     $product->save();
@@ -120,7 +120,7 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
-            'image' => 'url', // Valide que l'image est une URL
+            'image' => 'url',
         ]);
 
         $product->update([
@@ -128,7 +128,7 @@ class ProductController extends Controller
             'description' => $request->get('description'),
             'price' => $request->get('price'),
             'stock' => $request->get('stock'),
-            'image' => $request->get('image'), // Met à jour l'URL de l'image
+            'image' => $request->get('image'),
         ]);
 
         $product->categories()->sync([$request->get('category_id')]);

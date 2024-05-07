@@ -30,18 +30,18 @@ const router = createRouter({
     },
     {
       path: '/register',
-        name: 'register',
+      name: 'register',
       component: () => import('../views/Register.vue')
     },
     {
       path: '/user-management',
-        name: 'user-management',
-        component: () => import('../views/UserManagement.vue')
+      name: 'user-management',
+      component: () => import('../views/UserManagement.vue')
     },
     {
       path: '/product-management',
-        name: 'product-management',
-        component: () => import('../views/ProductManagement.vue')
+      name: 'product-management',
+      component: () => import('../views/ProductManagement.vue')
     },
     {
       path: '/product-edit/:id',
@@ -50,13 +50,13 @@ const router = createRouter({
     },
     {
       path: '/category-management',
-        name: 'category-management',
-        component: () => import('../views/CategorieManagement.vue')
+      name: 'category-management',
+      component: () => import('../views/CategorieManagement.vue')
     },
     {
       path: '/category-edit/:id',
-        name: 'category-edit',
-        component: () => import('../views/CategoryEdit.vue')
+      name: 'category-edit',
+      component: () => import('../views/CategoryEdit.vue')
     },
     {
       path: '/profil/',

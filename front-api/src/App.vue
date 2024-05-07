@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
-const isLoggedIn = ref(false);
+const isLoggedIn = ref(false)
 
 onMounted(() => {
-  isLoggedIn.value = !!localStorage.getItem('accessToken');
-});
+  isLoggedIn.value = !!localStorage.getItem('accessToken')
+})
 
 watch(isLoggedIn, () => {
   // Force le re-rendering du composant lorsque isLoggedIn change
-  isLoggedIn.value = !!localStorage.getItem('accessToken');
-});
+  isLoggedIn.value = !!localStorage.getItem('accessToken')
+})
 
 const logout = () => {
-  localStorage.removeItem('accessToken');
-  isLoggedIn.value = false;
+  localStorage.removeItem('accessToken')
+  isLoggedIn.value = false
 
-  location.href = '/login';
+  location.href = '/login'
 }
 </script>
 
@@ -39,6 +39,4 @@ const logout = () => {
   </header>
 
   <RouterView />
-
 </template>
-

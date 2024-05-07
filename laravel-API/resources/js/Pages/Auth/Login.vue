@@ -25,12 +25,12 @@ const form = useForm({
 const submit = () => {
     axios.post('/api/v1/login', form)
         .then(response => {
-            // Handle successful login
+
             form.reset();
             window.location.href = '/';
         })
         .catch(error => {
-            // Handle error
+
             form.errors = error.response.data.errors;
         });
 };

@@ -2,46 +2,63 @@
   <div class="register flex flex-col justify-center items-center h-screen w-full">
     <h2 class="mb-4 text-2xl">Login</h2>
     <form @submit.prevent="login" class="w-full max-w-xs">
-      <input v-model="email" type="text" placeholder="Email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3">
-      <input v-model="password" type="password" placeholder="Password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3">
-      <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
-      <router-link to="/register" class="text-blue-500 hover:text-blue-800">Créer un compte</router-link>
+      <input
+        v-model="email"
+        type="text"
+        placeholder="Email"
+        required
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3"
+      />
+      <input
+        v-model="password"
+        type="password"
+        placeholder="Password"
+        required
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3"
+      />
+      <button
+        type="submit"
+        class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Login
+      </button>
+      <router-link to="/register" class="text-blue-500 hover:text-blue-800"
+        >Créer un compte</router-link
+      >
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   data() {
     return {
       email: '',
-      password: '',
-    };
+      password: ''
+    }
   },
   methods: {
     async login() {
       try {
         const response = await axios.post('http://127.0.0.1:8000/api/v1/login', {
           email: this.email,
-          password: this.password,
-        });
+          password: this.password
+        })
 
         if (response.status === 200) {
-          localStorage.setItem('accessToken', response.data.token);
-          localStorage.setItem('userId', response.data.user.id); // Modifiez cette ligne
-          console.log('User ID stored in local storage:', response.data.user.id); // Et cette ligne
-          this.$root.$emit('login'); // Ajoutez cette ligne
+          localStorage.setItem('accessToken', response.data.token)
+          localStorage.setItem('userId', response.data.user.id)
+          console.log('User ID stored in local storage:', response.data.user.id)
+          this.$root.$emit('login')
 
-          this.$router.push('/dashboard');
+          this.$router.push('/dashboard')
         }
       } catch (error) {
-        console.error('An error occurred:', error);
+        console.error('An error occurred:', error)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
-
-

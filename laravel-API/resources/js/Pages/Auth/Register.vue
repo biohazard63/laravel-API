@@ -20,12 +20,10 @@ const form = useForm({
 const submit = () => {
     axios.post('/api/v1/register', form)
         .then(response => {
-            // Handle successful registration
             form.reset();
-            window.location.href = '/'; // Redirect to home page
+            window.location.href = '/';
         })
         .catch(error => {
-            // Handle error
             form.errors = error.response.data.errors;
         });
 };
