@@ -129,6 +129,11 @@
       <path value="$PROJECT_DIR$/laravel-API/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/laravel-API/vendor/sebastian/object-enumerator" />
       <path value="$PROJECT_DIR$/laravel-API/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/laravel-API/vendor/darkaonline/l5-swagger" />
+      <path value="$PROJECT_DIR$/laravel-API/vendor/swagger-api/swagger-ui" />
+      <path value="$PROJECT_DIR$/laravel-API/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/laravel-API/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/laravel-API/vendor/doctrine/annotations" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
