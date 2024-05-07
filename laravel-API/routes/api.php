@@ -30,5 +30,14 @@ Route::get('v1/categories/{category}', [CategoryController::class, 'show'])->mid
 Route::put('v1/categories/{category}', [CategoryController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('v1/categories/{category}', [CategoryController::class, 'destroy'])->middleware('auth:sanctum');
 
+// Order routes
+Route::get('v1/orders', [\App\Http\Controllers\OrderController::class, 'index'])->middleware('auth:sanctum');
+Route::post('v1/orders', [\App\Http\Controllers\OrderController::class, 'store'])->middleware('auth:sanctum');
+Route::get('v1/orders/{order}', [\App\Http\Controllers\OrderController::class, 'show'])->middleware('auth:sanctum');
+Route::put('v1/orders/{order}', [\App\Http\Controllers\OrderController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('v1/orders/{order}', [\App\Http\Controllers\OrderController::class, 'destroy'])->middleware('auth:sanctum');
+Route::post('v1/orders/{order}/products', [\App\Http\Controllers\OrderController::class, 'addProduct'])->middleware('auth:sanctum');
+
+
 Route::post('v1/login', [UserController::class, 'login']);
 Route::post('v1/register', [UserController::class, 'register']);

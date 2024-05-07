@@ -9,14 +9,17 @@ class ProductFactory extends Factory
 {
     protected $model = Product::class;
 
-    public function definition()
-    {
-        return [
-            'name' => $this->faker->word,
-            'description' => $this->faker->sentence,
-            'price' => $this->faker->randomFloat(2, 1, 100),
-            'stock' => $this->faker->numberBetween(1, 100),
-            'image' => $this->faker->imageUrl(),
-        ];
-    }
+public function definition()
+{
+    $images = ['Skateboard-PNG.png', 'téléchargement.jpg']; // Remplacez par les noms de vos images
+    $image = $images[array_rand($images)];
+
+    return [
+        'name' => $this->faker->word,
+        'description' => $this->faker->sentence,
+        'price' => $this->faker->randomFloat(2, 1, 100),
+        'stock' => $this->faker->numberBetween(1, 100),
+        'image' => "product_images/{$image}", // Incluez le sous-dossier dans le chemin de l'image
+    ];
+}
 }

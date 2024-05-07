@@ -58,7 +58,10 @@
             <td class="py-4 px-6 border-b">{{ product.name }}</td>
             <td class="py-4 px-6 border-b">{{ product.description }}</td>
             <td class="py-4 px-6 border-b">{{ product.price }}</td>
-            <td class="py-4 px-6 border-b"><img :src="product.image" class="w-20 h-20"></td>
+            <td class="py-4 px-6 border-b">
+                <img :src="`http://127.0.0.1:8000/storage/${product.image}`">
+
+            </td>
             <td class="py-4 px-6 border-b">
               <button @click="navigateToProductEdit(product.id)" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Modifier</button>
               <button @click="deleteProduct(product.id)" class="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Supprimer</button>
