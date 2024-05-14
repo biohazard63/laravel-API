@@ -50,6 +50,7 @@ export default {
         if (response.status === 200) {
           localStorage.setItem('accessToken', response.data.token)
           localStorage.setItem('userId', response.data.user.id)
+          localStorage.setItem('userName', response.data.user.name)
           console.log('User ID stored in local storage:', response.data.user.id)
           this.$root.$emit('login')
 
