@@ -25,4 +25,11 @@ class Order extends Model
 {
     return $this->belongsTo(User::class, 'customer_name', 'name');
 }
+public function updateProductStocks()
+{
+    foreach ($this->products as $product) {
+        $product->stock -= 1; // décrémenter le stock du produit
+        $product->save();
+    }
+}
 }

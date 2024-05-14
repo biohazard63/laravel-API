@@ -27,6 +27,7 @@ class OrderController extends Controller
                 $order->products()->attach($product['id'], ['quantity' => $product['quantity']]);
             }
         }
+        $order->updateProductStocks();
 
         return response()->json($order, 201);
     }

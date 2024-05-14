@@ -28,6 +28,7 @@ const logout = () => {
     <nav class="flex space-x-4">
       <RouterLink class="text-white" to="/">Accueil</RouterLink>
       <RouterLink class="text-white" to="/product-list">Liste des produits</RouterLink>
+      <RouterLink class="text-white" to="/order-management">Gestion des commandes</RouterLink>
       <RouterLink class="text-white" to="/register">Register</RouterLink>
       <RouterLink class="text-white" to="/dashboard">Dashboard</RouterLink>
       <RouterLink class="text-white" to="/user-management">User Management</RouterLink>
