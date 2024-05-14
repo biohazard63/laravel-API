@@ -12,6 +12,8 @@
       <h2 class="text-4xl font-bold mb-4 mt-8">Panier</h2>
       <div v-for="product in cart" :key="product.id" class="mb-4 bg-white shadow rounded overflow-hidden">
         <p class="text-xl font-semibold p-4">{{ product.name }} - {{ product.price }}€</p>
+        <input type="number" v-model="product.quantity" min="1" class="border-2 border-gray-300 p-2 rounded-md">
+        <button @click="updateQuantity(product)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Mettre à jour</button>
       </div>
       <div class="flex justify-between items-center">
         <p class="text-2xl font-bold">Total : {{ total }}€</p>
@@ -22,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, defineExpose } from 'vue';
 import axios from 'axios';
 
 const products = ref([]);
@@ -38,41 +40,51 @@ onMounted(async () => {
 });
 
 const addToCart = (product) => {
+  // When adding to cart, we also add a quantity property to the product
+  product.quantity = 1;
   cart.value.push(product);
-  console.log(product);
-  console.log(`Produit ajouté au panier : ${product.name}`);
+};
+
+const updateQuantity = (product) => {
+  // Update the quantity of the product in the cart
+  const index = cart.value.findIndex(p => p.id === product.id);
+  if (index !== -1) {
+    cart.value[index].quantity = product.quantity;
+  }
 };
 
 const total = computed(() => {
-  return cart.value.reduce((acc, product) => acc + Number(product.price), 0).toFixed(2);
+  return cart.value.reduce((acc, product) => acc + Number(product.price) * product.quantity, 0).toFixed(2);
 });
+
 const checkout = async () => {
-  console.log('Commande en cours...');
-
-  // Récupérer le nom de l'utilisateur à partir du local storage
-  const customerName = localStorage.getItem('username');
-
-  // Créer un objet commande avec les détails nécessaires
+  // Create an order object with necessary details
   const order = {
-    customer_name: customerName,
-    products: cart.value.map(product => ({ id: product.id, quantity: 1 })), // replace 1 with the actual quantity
+    customer_name: localStorage.getItem('username'), // Get the username from local storage
+    products: cart.value.map(product => ({ id: product.id, quantity: product.quantity })),
     total_amount: total.value,
   };
 
   try {
-    // Envoyer la commande à l'API via une requête POST
+    // Send the order to the API via a POST request
     const response = await axios.post('http://localhost:8000/api/v1/orders', order);
 
-    // Vérifier la réponse de l'API
+    // Check the API response
     if (response.status === 201) {
-      console.log('Commande enregistrée avec succès');
-      // Vider le panier après une commande réussie
+      // Empty the cart after a successful order
       cart.value = [];
     } else {
-      console.log('Erreur lors de l\'enregistrement de la commande');
+      console.error('Error while recording the order');
     }
   } catch (error) {
-    console.error('Une erreur est survenue lors de l\'envoi de la commande à l\'API:', error);
+    console.error('An error occurred while sending the order to the API:', error);
   }
 };
+
+// Expose the methods to the template
+defineExpose({
+  addToCart,
+  updateQuantity,
+  checkout,
+});
 </script>

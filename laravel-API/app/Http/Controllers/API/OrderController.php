@@ -24,7 +24,10 @@ class OrderController extends Controller
 
         if ($request->has('products')) {
             foreach ($request->input('products') as $product) {
-                $order->products()->attach($product['id'], ['quantity' => $product['quantity']]);
+                // Modifier la quantité ici avant de l'attacher à la commande
+                $modified_quantity = $product['quantity']; // Remplacez ceci par la nouvelle quantité
+
+                $order->products()->attach($product['id'], ['quantity' => $modified_quantity]);
             }
         }
         $order->updateProductStocks();

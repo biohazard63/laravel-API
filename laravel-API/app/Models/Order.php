@@ -28,7 +28,11 @@ class Order extends Model
 public function updateProductStocks()
 {
     foreach ($this->products as $product) {
-        $product->stock -= 1; // décrémenter le stock du produit
+        // Get the quantity of the product in the order
+        $quantity = $product->pivot->quantity;
+
+        // Decrement the stock of the product by the quantity
+        $product->stock -= $quantity;
         $product->save();
     }
 }
