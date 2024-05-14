@@ -57,7 +57,7 @@ const total = computed(() => {
 
 const checkout = async () => {
   const order = {
-    customer_name: localStorage.getItem('username'),
+    customer_name: localStorage.getItem('userName'),
     products: cart.value.map(product => ({ id: product.id, quantity: product.quantity })),
     total_amount: total.value,
   };

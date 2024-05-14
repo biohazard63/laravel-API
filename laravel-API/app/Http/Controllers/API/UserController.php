@@ -125,23 +125,24 @@ class UserController extends Controller
      *     ),
      * )
      */
-    public function update(Request $request, User $user)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'sometimes|min:6',
-        ]);
+    public function update(Request $request, $id)
+{
+    $user = User::findOrFail($id);
 
-        if ($request->has('password')) {
-            $validatedData['password'] = bcrypt($validatedData['password']);
-        }
+    $request->validate([
+        'name' => 'required|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        'password' => 'required|min:8',
+    ]);
 
-        $user->update($validatedData);
+    $user->name = $request->get('name');
+    $user->email = $request->get('email');
+    $user->password = Hash::make($request->get('password'));
 
-        return response()->json(['user' => $user]);
-    }
+    $user->save();
 
+    return response()->json($user, 200);
+}
    /**
      * @OA\Delete(
      *     path="/api/users/{user}",

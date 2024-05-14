@@ -9,7 +9,27 @@
         <p class="mb-2">
           <strong class="text-gray-700 text-sm font-bold">Email:</strong> {{ user.email }}
         </p>
+
+        <form @submit.prevent="updateProfile" class="bg-blue-100 p-4 rounded">
+          <h2 class="text-xl font-bold mb-2">Mise à jour du profil</h2>
+          <div class="mb-3">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Nom:</label>
+            <input v-model="user.name" id="name" type="text" placeholder="Name" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+          <div class="mb-3">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email:</label>
+            <input v-model="user.email" id="email" type="email" placeholder="Email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+          <div class="mb-3">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Mot de passe:</label>
+            <input v-model="password" id="password" type="password" placeholder="Password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+          <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Mettre à jour le profil</button>
+          </div>
+        </form>
       </div>
+
       <div v-if="orders.length" class="mb-5 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <h2 class="text-2xl font-bold mb-5 text-center">Dernières commandes</h2>
     <table class="w-full table-auto">
@@ -51,7 +71,8 @@ export default {
   data() {
     return {
       user: null,
-      orders: []
+      orders: [],
+      password: ''
     }
   },
   async created() {
@@ -81,6 +102,19 @@ export default {
         this.orders = response.data
       } catch (error) {
         console.error('An error occurred in loadUserOrders:', error)
+      }
+    },
+    async updateProfile() {
+      const userId = localStorage.getItem('userId')
+      try {
+        await axios.put(`http://127.0.0.1:8000/api/v1/users/${userId}`, {
+          name: this.user.name,
+          email: this.user.email,
+          password: this.password
+        })
+        this.password = ''
+      } catch (error) {
+        console.error('An error occurred in updateProfile:', error)
       }
     }
   }
