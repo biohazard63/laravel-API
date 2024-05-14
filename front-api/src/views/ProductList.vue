@@ -8,18 +8,18 @@
       </div>
     </div>
 
-    <div class="w-1/2 pl-4">
-      <h2 class="text-4xl font-bold mb-4 mt-8">Panier</h2>
-      <div v-for="product in cart" :key="product.id" class="mb-4 bg-white shadow rounded overflow-hidden">
-        <p class="text-xl font-semibold p-4">{{ product.name }} - {{ product.price }}€</p>
-        <input type="number" v-model="product.quantity" min="1" class="border-2 border-gray-300 p-2 rounded-md">
-        <button @click="updateQuantity(product)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Mettre à jour</button>
-      </div>
-      <div class="flex justify-between items-center">
-        <p class="text-2xl font-bold">Total : {{ total }}€</p>
-        <button @click="checkout" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">Commander</button>
-      </div>
+     <div class="fixed right-0 top-13 w-1/2 pl-4  h-screen overflow-auto">
+    <h2 class="text-4xl font-bold mb-4 mt-8">Panier</h2>
+    <div v-for="product in cart" :key="product.id" class="mb-4 bg-white shadow rounded overflow-hidden">
+      <p class="text-xl font-semibold p-4">{{ product.name }} - {{ product.price }}€</p>
+      <input type="number" v-model="product.quantity" min="1" class="border-2 border-gray-300 p-2 rounded-md">
+      <button @click="updateQuantity(product)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Mettre à jour</button>
     </div>
+    <div class="flex justify-between items-center">
+      <p class="text-2xl font-bold">Total : {{ total }}€</p>
+      <button @click="checkout" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">Commander</button>
+    </div>
+  </div>
   </div>
 </template>
 
