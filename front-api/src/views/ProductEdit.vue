@@ -107,30 +107,33 @@ export default {
       this.selectedImage = e.target.files[0]
       console.log(this.selectedImage)
     },
-    async updateProduct() {
-      const productId = this.$route.params.id
-      try {
-        const formData = new FormData()
-        formData.append('name', this.product.name)
-        formData.append('description', this.product.description)
-        formData.append('price', this.product.price)
-        formData.append('stock', this.product.stock)
-        formData.append('category_id', this.product.category_id)
-        if (this.selectedImage) {
-          formData.append('image', this.selectedImage, this.selectedImage.name)
-        }
+   async updateProduct() {
+  const productId = this.$route.params.id
+  try {
+    let imageUrl = this.product.image
+    if (this.selectedImage) {
+      const imageFormData = new FormData()
+      imageFormData.append('image', this.selectedImage, this.selectedImage.name)
 
-
-        for (var pair of formData.entries()) {
-          console.log(pair[0] + ', ' + pair[1])
-        }
-
-        await axios.put(`http://127.0.0.1:8000/api/v1/products/${productId}`, formData)
-        this.$router.push({ name: 'product-management' })
-      } catch (error) {
-        console.error('An error occurred:', error)
-      }
+      const imageResponse = await axios.post(`http://127.0.0.1:8000/api/v1/upload`, imageFormData)
+      imageUrl = imageResponse.data.url
     }
+
+    const productData = {
+      name: this.product.name,
+      description: this.product.description,
+      price: this.product.price,
+      stock: this.product.stock,
+      category_id: this.product.category_id,
+      image: imageUrl
+    }
+
+    await axios.put(`http://127.0.0.1:8000/api/v1/products/${productId}`, productData)
+    this.$router.push({ name: 'product-management' })
+  } catch (error) {
+    console.error('An error occurred:', error)
+  }
+}
   }
 }
 </script>

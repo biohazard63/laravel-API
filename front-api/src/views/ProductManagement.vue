@@ -109,7 +109,7 @@
             <td class="py-4 px-6 border-b">{{ product.description }}</td>
             <td class="py-4 px-6 border-b">{{ product.price }}</td>
             <td class="py-4 px-6 border-b">
-              <img :src="`http://127.0.0.1:8000/storage/${product.image}`" />
+<img :src="product.image" />
             </td>
             <td class="py-4 px-6 border-b">
               <div class="flex">

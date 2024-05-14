@@ -21,6 +21,7 @@ Route::delete('v1/users/{user}', [UserController::class, 'destroy'])->middleware
 Route::get('v1/products', [ProductController::class, 'index'])->middleware('auth:sanctum');
 Route::post('v1/products', [ProductController::class, 'store'])->middleware('auth:sanctum');
 Route::get('v1/products/{product}', [ProductController::class, 'show'])->middleware('auth:sanctum');
+Route::post('v1/upload', [ProductController::class, 'upload'])->middleware('auth:sanctum');
 Route::put('v1/products/{product}', [ProductController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('v1/products/{product}', [ProductController::class, 'destroy'])->middleware('auth:sanctum');
 
