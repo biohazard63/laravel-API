@@ -22,8 +22,8 @@ export default {
     };
   },
   async mounted() {
-    const orderId = this.$route.params.id; // Get the order ID from the route parameters
-    console.log('orderId:', orderId); // Add this line
+    const orderId = this.$route.params.id;
+    console.log('orderId:', orderId);
 
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/v1/orders/${orderId}`);

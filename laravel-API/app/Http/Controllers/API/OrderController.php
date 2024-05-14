@@ -24,7 +24,6 @@ class OrderController extends Controller
 
         if ($request->has('products')) {
             foreach ($request->input('products') as $product) {
-                // Modifier la quantité ici avant de l'attacher à la commande
                 $modified_quantity = $product['quantity']; // Remplacez ceci par la nouvelle quantité
 
                 $order->products()->attach($product['id'], ['quantity' => $modified_quantity]);
@@ -48,18 +47,14 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        // Trouver la commande par son ID
         $order = Order::find($id);
 
-        // Si la commande n'existe pas, renvoyer une erreur
         if (!$order) {
             return response()->json(['message' => 'Order not found'], 404);
         }
 
-        // Charger les produits de la commande
         $order->load('products');
 
-        // Renvoyer la commande en réponse
         return response()->json($order);
     }
 

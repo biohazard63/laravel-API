@@ -9,7 +9,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/home', // Ajoutez cette nouvelle route
+      path: '/home',
       name: 'homepage',
       component: HomeView
     },

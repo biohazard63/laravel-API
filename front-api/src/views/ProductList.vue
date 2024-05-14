@@ -40,13 +40,11 @@ onMounted(async () => {
 });
 
 const addToCart = (product) => {
-  // When adding to cart, we also add a quantity property to the product
   product.quantity = 1;
   cart.value.push(product);
 };
 
 const updateQuantity = (product) => {
-  // Update the quantity of the product in the cart
   const index = cart.value.findIndex(p => p.id === product.id);
   if (index !== -1) {
     cart.value[index].quantity = product.quantity;
@@ -58,20 +56,16 @@ const total = computed(() => {
 });
 
 const checkout = async () => {
-  // Create an order object with necessary details
   const order = {
-    customer_name: localStorage.getItem('username'), // Get the username from local storage
+    customer_name: localStorage.getItem('username'),
     products: cart.value.map(product => ({ id: product.id, quantity: product.quantity })),
     total_amount: total.value,
   };
 
   try {
-    // Send the order to the API via a POST request
     const response = await axios.post('http://localhost:8000/api/v1/orders', order);
 
-    // Check the API response
     if (response.status === 201) {
-      // Empty the cart after a successful order
       cart.value = [];
     } else {
       console.error('Error while recording the order');
@@ -81,7 +75,6 @@ const checkout = async () => {
   }
 };
 
-// Expose the methods to the template
 defineExpose({
   addToCart,
   updateQuantity,

@@ -40,5 +40,7 @@ Route::delete('v1/orders/{order}', [OrderController::class, 'destroy'])->middlew
 Route::post('v1/orders/{order}/products', [OrderController::class, 'addProduct'])->middleware('auth:sanctum');
 Route::get('v1/users/{name}/orders', [OrderController::class, 'getUserOrders'])->middleware('auth:sanctum');
 
+
+// Auth routes
 Route::post('v1/login', [UserController::class, 'login']);
 Route::post('v1/register', [UserController::class, 'register']);

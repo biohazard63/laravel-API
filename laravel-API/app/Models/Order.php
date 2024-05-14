@@ -14,7 +14,6 @@ class Order extends Model
         'total_amount'
     ];
 
-    // Définir la relation avec la table order_product
     public function products()
     {
         return $this->belongsToMany(Product::class, 'order_product')
@@ -28,10 +27,8 @@ class Order extends Model
 public function updateProductStocks()
 {
     foreach ($this->products as $product) {
-        // Get the quantity of the product in the order
         $quantity = $product->pivot->quantity;
 
-        // Decrement the stock of the product by the quantity
         $product->stock -= $quantity;
         $product->save();
     }
