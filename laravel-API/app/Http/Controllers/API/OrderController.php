@@ -46,17 +46,22 @@ class OrderController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
     }
-public function show($name)
-{
-    $user = User::where('name', $name)->first();
-    if ($user) {
-        $orders = Order::where('customer_name', $name)->get();
-        $user->orders = $orders; // Attach the orders to the user
-        return response()->json($user);
-    } else {
-        return response()->json(['message' => 'User not found'], 404);
+    public function show($id)
+    {
+        // Trouver la commande par son ID
+        $order = Order::find($id);
+
+        // Si la commande n'existe pas, renvoyer une erreur
+        if (!$order) {
+            return response()->json(['message' => 'Order not found'], 404);
+        }
+
+        // Charger les produits de la commande
+        $order->load('products');
+
+        // Renvoyer la commande en réponse
+        return response()->json($order);
     }
-}
 
     public function update(Request $request, Order $order)
     {

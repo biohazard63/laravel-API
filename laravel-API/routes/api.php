@@ -34,7 +34,7 @@ Route::delete('v1/categories/{category}', [CategoryController::class, 'destroy']
 // Order routes
 Route::get('v1/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
 Route::post('v1/orders', [OrderController::class, 'store'])->middleware('auth:sanctum');
-Route::get('v1/orders/{order}', [OrderController::class, 'show'])->middleware('auth:sanctum');
+Route::get('v1/orders/{id}', [OrderController::class, 'show'])->middleware('auth:sanctum');
 Route::put('v1/orders/{order}', [OrderController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('v1/orders/{order}', [OrderController::class, 'destroy'])->middleware('auth:sanctum');
 Route::post('v1/orders/{order}/products', [OrderController::class, 'addProduct'])->middleware('auth:sanctum');
