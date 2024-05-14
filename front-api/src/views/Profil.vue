@@ -78,7 +78,6 @@ export default {
   async created() {
     const userName = localStorage.getItem('userName')
     const userId = localStorage.getItem('userId')
-    console.log('Username from localStorage:', userName)
 
     if (userName) {
       await this.loadUserProfile(userId)
@@ -96,9 +95,7 @@ export default {
     },
     async loadUserOrders(userName) {
       try {
-        console.log('loadUserOrders called with userName:', userName)
         const response = await axios.get(`http://127.0.0.1:8000/api/v1/users/${encodeURIComponent(userName)}/orders`)
-        console.log('Response from loadUserOrders:', response)
         this.orders = response.data
       } catch (error) {
         console.error('An error occurred in loadUserOrders:', error)

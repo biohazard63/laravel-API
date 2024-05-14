@@ -105,7 +105,6 @@ export default {
   methods: {
     onFileChange(e) {
       this.selectedImage = e.target.files[0]
-      console.log(this.selectedImage)
     },
    async updateProduct() {
   const productId = this.$route.params.id

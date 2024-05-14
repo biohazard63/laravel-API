@@ -73,8 +73,7 @@ export default {
   },
   methods: {
     async register() {
-      console.log('Password:', this.password)
-      console.log('Password Confirmation:', this.password_confirmation)
+
 
       if (this.password !== this.password_confirmation) {
         alert('The password confirmation does not match.')
