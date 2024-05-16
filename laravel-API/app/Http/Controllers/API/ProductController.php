@@ -63,7 +63,7 @@ class ProductController extends Controller
      * )
      */
 
-  public function store(Request $request)
+public function store(Request $request)
 {
     $request->validate([
         'name' => 'required|max:255',
@@ -92,7 +92,6 @@ class ProductController extends Controller
     $product->categories()->attach($category);
     return response()->json($product, 201);
 }
-
     /**
  * @OA\Put(
  *     path="/api/products/{product}",
