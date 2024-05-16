@@ -74,7 +74,6 @@ export default {
   methods: {
     async register() {
 
-
       if (this.password !== this.password_confirmation) {
         alert('The password confirmation does not match.')
         return

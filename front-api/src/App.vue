@@ -48,12 +48,12 @@ const logout = () => {
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/">Accueil</RouterLink>
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/product-list">Liste des produits</RouterLink>
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/order-management">Gestion des commandes</RouterLink>
-      <RouterLink class="text-white mr-8 hover:text-blue-500" to="/register">Register</RouterLink>
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/dashboard">Dashboard</RouterLink>
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/user-management">User Management</RouterLink>
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/product-management">Product Management</RouterLink>
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/category-management">Category Management</RouterLink>
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/profil">Profil</RouterLink>
+      <RouterLink class="text-white mr-8 hover:text-blue-500" to="/register">Register</RouterLink>
       <RouterLink class="text-white mr-8 hover:text-blue-500" to="/login">Login</RouterLink>
       <button class="px-4 py-2 text-white bg-red-500 rounded" @click="logout">Logout</button>
   </div>

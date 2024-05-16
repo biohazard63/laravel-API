@@ -20,8 +20,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'sateprod@gmail.com',
         ]);
         $this->call([
-            ProductSeeder::class,
             CategorySeeder::class,
+            ProductSeeder::class,
+
         ]);
     }
 }

@@ -93,6 +93,15 @@
           </div>
         </form>
       </div>
+      <div>
+        <label for="categoryFilter">Filtrer par catégorie:</label>
+        <select id="categoryFilter" v-model="selectedCategory" @change="filterProducts">
+          <option value="">Toutes les catégories</option>
+          <option v-for="category in filteredCategories" :key="category.id" :value="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
       <table class="w-full text-left border-collapse">
         <thead>
           <tr>
@@ -100,16 +109,22 @@
             <th class="py-4 px-6 bg-blue-500 text-white uppercase">Description</th>
             <th class="py-4 px-6 bg-blue-500 text-white uppercase">Prix</th>
             <th class="py-4 px-6 bg-blue-500 text-white uppercase">Image</th>
+            <th class="py-4 px-6 bg-blue-500 text-white uppercase">categorie</th>
             <th class="py-4 px-6 bg-blue-500 text-white uppercase">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product.id" class="text-gray-700">
+          <tr v-for="product in filteredProducts" :key="product.id" class="text-gray-700">
             <td class="py-4 px-6 border-b">{{ product.name }}</td>
             <td class="py-4 px-6 border-b">{{ product.description }}</td>
             <td class="py-4 px-6 border-b">{{ product.price }}</td>
             <td class="py-4 px-6 border-b">
-<img :src="product.image" />
+              <img :src="product.image" />
+            </td>
+            <td class="py-4 px-6 border-b">
+              <ul>
+                <li v-for="category in product.categories" :key="category.id">{{ category.name }}</li>
+              </ul>
             </td>
             <td class="py-4 px-6 border-b">
               <div class="flex">
@@ -160,6 +175,7 @@ export default {
       newProductImage: null,
       selectedCategory: null,
       categories: [],
+      filteredCategories: [],
       showForm: false,
       editingProduct: null
     }
@@ -189,6 +205,7 @@ export default {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/v1/categories')
         this.categories = response.data
+        this.filteredCategories = [...this.categories]
       } catch (error) {
         console.error('An error occurred:', error)
       }
@@ -216,6 +233,23 @@ export default {
       } catch (error) {
         console.error('An error occurred:', error)
       }
+    },
+
+    filterProducts() {
+      console.log('filterProducts called with selectedCategory:', this.selectedCategory);
+      if (this.selectedCategory) {
+        this.filteredProducts = this.products.filter(product =>
+          product.categories.some(category => category.id === this.selectedCategory)
+        );
+      } else {
+        this.filteredProducts = [...this.products];
+      }
+      console.log('filteredProducts:', this.filteredProducts);
+    },
+  },
+  watch: {
+    selectedCategory() {
+      this.filterProducts();
     }
   }
 }

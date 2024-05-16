@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -27,5 +28,18 @@ class ProductFactory extends Factory
             'stock' => $this->faker->numberBetween(1, 100),
             'image' => $imageUrl,
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Product $product) {
+            $categories = Category::all();
+
+            if ($categories->isNotEmpty()) {
+                $product->categories()->attach(
+                    $categories->random(rand(1, 3))->pluck('id')->toArray()
+                );
+            }
+        });
     }
 }

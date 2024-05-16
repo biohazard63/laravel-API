@@ -41,6 +41,11 @@ class ProductController extends Controller
         return response()->json($products, 200);
     }
 
+    public function indexC()
+{
+    return Product::with('categories')->get();
+}
+
     /**
      * @OA\Post(
      *     path="/api/products",

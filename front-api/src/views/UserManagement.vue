@@ -38,25 +38,19 @@ export default {
       users: []
     }
   },
-  async created() {
-    await this.loadUsers()
+  created() {
+    this.loadUsers()
   },
   methods: {
-    async loadUsers() {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/v1/users')
-        this.users = response.data
-      } catch (error) {
-        console.error('An error occurred:', error)
-      }
+    loadUsers() {
+      axios.get('http://127.0.0.1:8000/api/v1/users')
+        .then(response => this.users = response.data)
+        .catch(error => console.error('An error occurred:', error))
     },
-    async deleteUser(userId) {
-      try {
-        await axios.delete(`http://127.0.0.1:8000/api/v1/users/${userId}`)
-        await this.loadUsers()
-      } catch (error) {
-        console.error('An error occurred:', error)
-      }
+    deleteUser(userId) {
+      axios.delete(`http://127.0.0.1:8000/api/v1/users/${userId}`)
+        .then(() => this.loadUsers())
+        .catch(error => console.error('An error occurred:', error))
     }
   }
 }

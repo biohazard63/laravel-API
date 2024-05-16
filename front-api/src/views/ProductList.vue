@@ -2,7 +2,16 @@
   <div class="container mx-auto px-4 flex">
     <div class="w-1/2 pr-4">
       <h1 class="text-4xl font-bold mb-4">Liste des produits</h1>
-      <div v-for="product in products" :key="product.id" class="mb-4 bg-white shadow rounded overflow-hidden">
+      <div>
+        <label for="category">Filtrer par catégorie:</label>
+        <select id="category" v-model="selectedCategory" @change="filterProducts">
+          <option value="">Toutes les catégories</option>
+          <option v-for="category in categories" :key="category.id" :value="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+      <div v-for="product in filteredProducts" :key="product.id" class="mb-4 bg-white shadow rounded overflow-hidden">
         <p class="text-xl font-semibold p-4">{{ product.name }} - {{ product.price }}€</p>
         <button @click="addToCart(product)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter au panier</button>
       </div>
@@ -24,20 +33,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, defineExpose } from 'vue';
+import { ref, onMounted, computed, defineExpose, watch } from 'vue';
 import axios from 'axios';
 
 const products = ref([]);
+const filteredProducts = ref([]);
+const categories = ref([]);
+const selectedCategory = ref('');
 const cart = ref([]);
 
 onMounted(async () => {
   try {
     const response = await axios.get('http://localhost:8000/api/v1/products');
     products.value = response.data;
+    filteredProducts.value = [...products.value];
+
+    const categoryResponse = await axios.get('http://localhost:8000/api/v1/categories');
+    categories.value = categoryResponse.data;
   } catch (error) {
     console.error(error);
   }
 });
+
+watch(selectedCategory, () => {
+  filterProducts();
+});
+
+const filterProducts = () => {
+  if (selectedCategory.value) {
+    filteredProducts.value = products.value.filter(product => product.categories.some(category => category.id === selectedCategory.value));
+  } else {
+    filteredProducts.value = [...products.value];
+  }
+};
 
 const addToCart = (product) => {
   product.quantity = 1;
@@ -79,5 +107,6 @@ defineExpose({
   addToCart,
   updateQuantity,
   checkout,
+  filterProducts
 });
 </script>
